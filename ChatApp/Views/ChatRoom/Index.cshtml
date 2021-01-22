@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ChatApp.Models.Comment>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2 class="text-success text-center"> Welcom to Chat Room!</h2>
+
+@using (Html.BeginForm("PostComment", "ChatRoom", FormMethod.Post))
+{
+<span class="pull-right">
+    <span>
+        @if (Session["ImageUrl"].ToString().Length > 0)
+        {
+            <img src="@Url.Content(Session["ImageUrl"].ToString())" alt="No Image" style="height:64px" class="img-responsive img-circle" />
+        }
+        else
+        {
+            <img src="@Url.Content("~/Profile Images/avatar.png")" alt="No Image" style="height:64px" class="img-responsive img-circle" />
+        }
+        <Input type="text" name="CommentText" placeholder="Type new comment..." style="width:700px; height:70px; font-size:20px; margin-top:10px" />
+    </span>
+    <br /> <br /> 
+    <input type="submit" value="Comment" class="btn btn-success " style="margin-bottom:10px" />
+</span>
+   
+}
+
+<table class="table">
+
+    @foreach (var comment in Model)
+    {
+        <tr style="border:1px solid black">
+            <td> 
+                <span>
+                    @if (comment.User.ImageUrl.Length > 0)
+                    {
+                        <img src="@Url.Content(comment.User.ImageUrl)" alt="No Image" style="height:45px" class="img-responsive img-circle" />
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Profile Images/3.jpg")" alt="No Image" style="height:45px" class="img-responsive img-circle" />
+                    }
+                </span>
+                <span style="font-size:20px">                  
+                    @Html.DisplayFor(modelItem => comment.Text)
+                </span>
+                <span style="margin-left:10px">
+                    @comment.CreatedOn
+                </span>
+               
+
+            </td>
+        </tr>
+    }
+</table>
